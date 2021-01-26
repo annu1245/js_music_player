@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    
+	 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+	 <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+	<body>
+	<div class="main_div">
+		<div class="music_container">
+			<h2 id="title">Dil meri naa sune</h2>
+			<h3 id="artist">Attif aslam</h3>
+			<div class="image-container">
+				<img src="img/m2.jpg">
+			</div>
+	<!-- controls -->
+			<div class="music_controls">
+			<i class="fas fa-backward" id="prev" title="previous"></i>
+			<i class="fas fa-play main_button" id="play" title="play"></i>
+			<i class="fas fa-forward" id="next" title="next"></i>
+			</div>
+
+	<audio src="music/m2.mp3"></audio>
+		</div>
+	</div>
+
+	<script>
+		const music = document.querySelector('audio');
+		const img = document.querySelector('img');
+		const play = document.getElementById('play');
+		const artist = document.getElementById('artist');
+		const title = document.getElementById('title');
+		const prev = document.getElementById('prev');
+		const next = document.getElementById('next');
+
+		const songs = [
+			{
+				name: "m1",
+				title: "tera hone laga hoon",
+				artist: "atif aslam",
+			},
+			{
+				name: "m2",
+				title: "dil meri naa sune",
+				artist: "atif aslam",
+			},
+			{
+				name: "m3",
+				title: "dil chahte ho",
+				artist: "atta ur rahman",
+			},
+
+		];
+
+		let isPlaying = false;
+
+		const playMusic = () =>{
+			isPlaying = true;
+			music.play();
+			play.classList.replace("fa-play", "fa-pause");
+			img.classList.add("anime");
+		}
+
+		const pauseMusic = () =>{
+			isPlaying = false;
+			music.pause();
+			play.classList.replace("fa-pause", "fa-play");
+			img.classList.remove("anime");
+		}
+
+		play.addEventListener("click", () =>{
+			isPlaying ? pauseMusic() : playMusic()
+		});
+
+
+		const loadSongs = (songs) => {
+			title.textContent = songs.title;
+			artist.textContent = songs.artist;
+			music.src = "music/"+songs.name+".mp3";
+			img.src = "img/"+songs.name+".jpg";
+		}
+
+		// loadSongs(songs[1]);
+
+		songIndex = 0;
+
+		const nextSong = () =>{
+			songIndex = (songIndex + 1)%songs.length;
+			loadSongs(songs[songIndex]);
+			playMusic();
+		}
+
+		const prevSong = () =>{
+			songIndex = (songIndex -1 + songs.length)%songs.length;
+			loadSongs(songs[songIndex]);
+			playMusic();
+		}
+
+		next.addEventListener("click", nextSong);
+		prev.addEventListener("click", prevSong);
+		
+
+	</script>
+</body>
+</html>
